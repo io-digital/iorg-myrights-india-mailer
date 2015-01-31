@@ -9,14 +9,14 @@ var Joi = require('joi');
 
 var mandrill = require('node-mandrill')('0voleNnKpPRJBpKS5-ywSw');
 
-// setup the server
+// setup the hapi server
 var server = new Hapi.Server();
 server.connection({
   host: 'localhost',
   port: 5555
 });
 
-// setup the routes
+// setup the /ask route
 server.route({
   method: 'POST',
   path: '/ask',
@@ -44,6 +44,7 @@ server.route({
   }
 });
 
+// setup the /help route
 server.route({
   method: 'POST',
   path: '/help',
@@ -104,6 +105,7 @@ server.start(function () {
     server.log('info', 'Server running at: ' + server.info.uri);
 });
 
+// function that sends mail
 function sendMail(message){
 
   mandrill('/messages/send', {
