@@ -31,14 +31,19 @@ server.route({
 
     sendMail(message);
 
-    reply.redirect(request.payload.redirect_url);
+    reply.redirect(request.payload.redirect_success);
 
   },
   config: {
     validate: {
       payload: {
         question: Joi.string().required(),
-        redirect_url: Joi.string().required()
+        redirect_success: Joi.string().required(),
+        redirect_error: Joi.string().required(), 
+      },
+      failAction: function(request, reply, source, err){
+        server.log(JSON.stringify(err));
+        reply.redirect(request.payload.redirect_error);
       }
     }
   }
@@ -69,7 +74,7 @@ server.route({
 
     sendMail(message);
 
-    reply.redirect(request.payload.redirect_url);
+    reply.redirect(request.payload.redirect_success);
 
   },
   config: {
@@ -77,7 +82,12 @@ server.route({
       payload: {
         email: Joi.string().email(),
         phone_number: Joi.string(),
-        redirect_url: Joi.string().required()
+        redirect_success: Joi.string().required(),
+        redirect_error: Joi.string().required(), 
+      },
+      failAction: function(request, reply, source, err){
+        server.log(JSON.stringify(err));
+        reply.redirect(request.payload.redirect_error);
       }
     }
   }
@@ -114,7 +124,6 @@ function sendMail(message){
     message: message
   },
     function(err, response){
-      console.log(response);
       if (err){
         server.log('debug', 'Error sending mail: ' + JSON.stringify(error));
         return( JSON.stringify(error) );

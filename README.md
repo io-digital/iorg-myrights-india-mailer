@@ -11,15 +11,17 @@ The mailer will accept your posted params, email them and then redirect back to 
 
 The /ask route
 --------------
-This route has 2 required parameters (POSTed form-data):
+This route has 3 required parameters (POSTed form-data):
 
 * question - the question that is being asked
-* redirect_url - the URL that we need to HTTP redirect back to
+* redirect_success - the URL that we need to HTTP redirect back to when successfull
+* redirect_error - used in case of validation errors
 
 The /help route
 ---------------
-This route accepts 3 paramters:
+This route accepts 4 paramaters:
 
-* redirect_url - same as above and is required
+* redirect_success - same as above and is required
+* redurect_error - same as above and is required
 * phone_number - not required
 * email - not required
