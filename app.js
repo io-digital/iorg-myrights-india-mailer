@@ -108,14 +108,18 @@ server.start(function () {
 // function that sends mail
 function sendMail(message){
 
+  server.log('info', 'Sending mail: ' + JSON.stringify(message));
+
   mandrill('/messages/send', {
     message: message
   },
     function(err, response){
       console.log(response);
       if (err){
+        server.log('debug', 'Error sending mail: ' + JSON.stringify(error));
         return( JSON.stringify(error) );
       }else{
+        server.log('info', 'Email Sent');
         return( response );
       }
     }
