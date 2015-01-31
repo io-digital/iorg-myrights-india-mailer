@@ -23,5 +23,6 @@ This route accepts 4 paramaters:
 
 * redirect_success - same as above and is required
 * redurect_error - same as above and is required
-* phone_number - not required
-* email - not required
+* phone_number - required if there is no email
+* email - required if there is no phone_number
+
