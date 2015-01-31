@@ -79,12 +79,12 @@ server.route({
   },
   config: {
     validate: {
-      payload: {
+      payload: Joi.object().keys({
         email: Joi.string().email(),
         phone_number: Joi.string(),
         redirect_success: Joi.string().required(),
         redirect_error: Joi.string().required(), 
-      },
+      }).or('email', 'phone_number'),
       failAction: function(request, reply, source, err){
         server.log(JSON.stringify(err));
         reply.redirect(request.payload.redirect_error);
